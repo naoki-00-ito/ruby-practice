@@ -1,3 +1,6 @@
+## 利用書籍
+https://www.sbcr.jp/product/4797371277/
+
 ## Ruby install 参考
 https://prog-8.com/docs/ruby-env
 
