@@ -76,6 +76,54 @@ class BookInfoManager
     @book_infos[key] = book_info
   end
 
+  # 蔵書を検索する
+  def searchBookInfo
+    print "検索する文字列を入力してください: "
+    input = gets.chomp
+    flag = 0
+    hit = 0
+
+    @book_infos.each {|key, info|
+      
+      # 各項目に入力された文字列が含まれるか確認
+      # 含まれる場合はhitを加算
+      if info.title.include?(input) then
+        flag += 1
+      end
+
+      if info.author.include?(input) then
+        flag += 1
+      end
+
+      if info.page.to_s.include?(input) then
+        flag += 1
+      end
+
+      if info.publish_date.to_s.include?(input) then
+        flag += 1
+      end
+
+      # 入力された文字列が含まれるか判定
+      if flag != 0
+        puts "\n----------------------"
+        print info.toFormattedString
+        puts "\n----------------------"
+        # 検索ヒットの件数を加算
+        hit += 1
+      end
+
+      # flag をリセット
+      flag = 0
+
+    }
+
+    if hit == 0
+      print "入力した文字列が含まれる蔵書はありませんでした"
+    else
+      print "計:#{hit}件の蔵書が見つかりました"
+    end
+  end
+
   # 蔵書のデータ一覧を表示する
   def listAllBookInfos
     puts "\n----------------------"
@@ -92,8 +140,9 @@ class BookInfoManager
       print "
       1. 蔵書データの登録
       2. 蔵書データの表示
+      3. 蔵書データの検索
       9. 終了
-      番号を選んでください(1,2,9):"
+      番号を選んでください(1,2,3,9):"
 
       # 文字の入力を待つ
       num = gets.chomp
@@ -105,6 +154,10 @@ class BookInfoManager
       when '2' == num
         # 蔵書データの表示
         listAllBookInfos
+
+      when '3' == num
+        # 蔵書データの検索
+        searchBookInfo
         
       when '9' == num
         # アプリケーションの終了
